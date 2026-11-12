@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{site_title}}: integration tests written in YAML</title>
+<meta name="description" content="{{description}}">
+{{head_links}}
+{{scripts}}
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="home">
+<a class="skip" href="#main">Skip to content</a>
+{{topbar}}
+
+<main id="main">
+<section class="hero"><div class="wrap-wide hero-inner">
+<p class="eyebrow">// integration tests, declared in yaml</p>
+<h1>YAML in. <br><span class="accent">PASS</span> out.</h1>
+<p class="lead">Describe a test suite in a file. Venom runs every step, checks every assertion and tells you which line failed.</p>
+<div class="cta">
+<a class="btn" href="quickstart.html">Quickstart</a>
+<a class="btn-ghost" href="overview.html">Read the docs</a>
+<span class="fine">Independent fork of ovh/venom · Apache-2.0</span>
+</div>
+<div class="demo">
+<div class="panel"><div class="panel-title">site/examples/quickstart.yml</div>
+<pre><code><span class="k">name</span>: <span class="s">Quickstart suite</span>
+<span class="k">testcases</span>:
+  - <span class="k">name</span>: <span class="s">say hello</span>
+    <span class="k">steps</span>:
+      - <span class="k">type</span>: <span class="s">exec</span>
+        <span class="k">script</span>: <span class="s">echo "hello venom"</span>
+        <span class="k">assertions</span>:
+          - <span class="s">result.systemout ShouldContainSubstring hello</span>
+          - <span class="s">result.code ShouldEqual 0</span></code></pre></div>
+<div class="panel"><div class="panel-title">Run output</div>
+<pre><code><span class="dim">$ venom run site/examples/quickstart.yml</span>
+ • Quickstart suite (site/examples/quickstart.yml)
+ 	• <span class="ok">say-hello PASS</span>
+final status: <span class="ok">PASS</span></code></pre></div>
+</div>
+<div class="facts">
+<p class="fact"><b>{{executor_count}} executors</b>HTTP, SQL, exec, gRPC, Kafka and more</p>
+<p class="fact"><b>One file</b>steps, variables and assertions in YAML</p>
+<p class="fact"><b>No services</b>a single binary, no daemon to run</p>
+<p class="fact"><b>Apache-2.0</b>an independent fork of ovh/venom</p>
+</div>
+<div class="prose"><pre><code>go build -o venom ./cmd/venom
+./venom run site/examples/quickstart.yml</code></pre></div>
+</div></section>
+
+<section class="band wrap-wide">
+<h2>Find your way in</h2>
+{{group_cards}}
+</section>
+
+<section class="band wrap-wide">
+<h2>From install to your first report</h2>
+<ol class="path">
+<li><span class="step">Step 1</span><h3><a href="quickstart.html">Install</a></h3><p>Download a release binary or build the CLI from source.</p></li>
+<li><span class="step">Step 2</span><h3><a href="quickstart.html">Write a suite</a></h3><p>Describe the steps and the assertions of each test case in a YAML file.</p></li>
+<li><span class="step">Step 3</span><h3><a href="quickstart.html">Run it</a></h3><p>Call <code>venom run</code> on the file or on a folder of suites.</p></li>
+<li><span class="step">Step 4</span><h3><a href="quickstart.html">Read the report</a></h3><p>Get the result on the console, or as JSON, XML or HTML files.</p></li>
+</ol>
+</section>
+
+<section class="band wrap-wide home-docs">
+{{content}}
+</section>
+</main>
+
+<footer class="foot"><div class="wrap-wide"><span>Pluries Venom is an independent fork of ovh/venom, published under the Apache-2.0 licence. <a href="https://github.com/ovh/venom">Upstream: ovh/venom</a> · <a href="https://github.com/pluries/venom/blob/main/LICENSE">Licence</a></span><a href="https://github.com/pluries/venom">github.com/pluries/venom</a></div></footer>
+</body>
+</html>

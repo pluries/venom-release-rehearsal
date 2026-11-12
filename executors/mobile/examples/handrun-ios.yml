@@ -1,0 +1,53 @@
+# Hand-run suite for #2398 (V8): the executor on an iOS simulator. Not run yet: it needs a simulator .app (the Settings-app run is
+# handrun-settings.yml) and the XCUITest driver in Appium on the Mac (the first session builds WebDriverAgent and takes minutes).
+# Replace every <placeholder>: a booted-or-bootable simulator name, a simulator .app of your choice (a folder built for the
+# simulator, not an .ipa), its bundle id, and the accessibility ids of an element on its first screen and of a button that
+# raises a permission alert. Appium listens on 127.0.0.1:4723 on the same machine; for a Mac reached over SSH add
+# ssh: {host: ..., user: ..., key: ..., knownhosts: ...} under mobile.
+# Run from an empty folder: ../venom run handrun-ios.yml
+name: iOS simulator hand run
+vars:
+  mobile:
+    url: http://127.0.0.1:4723
+    platform: ios
+    device: <simulator name, for example iPhone 16>
+    app: ./<Demo>.app
+    appId: <bundle id of the app>
+    syncTimeout: 10
+
+testcases:
+  - name: find, tap, read, alert, swipe
+    steps:
+      - type: mobile
+        action: waitFor
+        accessibilityId: <an element on the first screen>
+        syncTimeout: 60
+      - type: mobile
+        action: tap
+        accessibilityId: <a button that raises a permission alert>
+      - type: mobile
+        action: alert
+        choice: accept
+        assertions:
+          - result.err ShouldBeEmpty
+          - result.text ShouldNotBeEmpty
+      - type: mobile
+        action: read
+        accessibilityId: <an element with a text>
+        assertions:
+          - result.err ShouldBeEmpty
+          - result.text ShouldNotBeEmpty
+      - type: mobile
+        action: swipe
+        direction: up
+      - type: mobile
+        action: terminate
+      - type: mobile
+        action: launch
+
+  - name: no alert open
+    steps:
+      - type: mobile
+        action: alert
+        assertions:
+          - result.err ShouldContainSubstring no alert open

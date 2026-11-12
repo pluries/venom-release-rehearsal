@@ -1,0 +1,13 @@
+Venom, Pluries fork
+
+This software is a fork of Venom, the project at https://github.com/ovh/venom
+(ovh/venom), and contains work of that project and of its contributors.
+
+Venom and this fork are licensed under the Apache License, Version 2.0. The
+license text is in the file LICENSE. You may obtain a copy of it at
+https://www.apache.org/licenses/LICENSE-2.0.
+
+Unless required by applicable law or agreed to in writing, software distributed
+under that license is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND. The changes made in this fork are recorded in its
+commit history.

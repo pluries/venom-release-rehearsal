@@ -1,0 +1,14 @@
+# One suite, two platforms: the React Native init app. Run it with the variables of the platform (--var-from-file).
+name: React Native app, same flow on Android and iOS
+testcases:
+  - name: find and read
+    steps:
+      - type: mobile
+        action: waitFor
+        text: Welcome to React Native
+        syncTimeout: 240
+      - type: mobile
+        action: read
+        text: Welcome to React Native
+        assertions:
+          - result.text ShouldEqual Welcome to React Native

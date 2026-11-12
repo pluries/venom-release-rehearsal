@@ -43,7 +43,7 @@ $(ALL_RESULTS_TARGETS):
 	$(info copying $(call get_results_from_target, $@) to $@)
 	@cp -f $(call get_results_from_target, $@) $@
 
-.PHONY: build lint clean testrun test dist test-xunit package
+.PHONY: build lint clean testrun test dist test-xunit package site site-check site-image site-image-check
 
 build: ## build all components and push them into dist directory
 	$(info Building Component venom)
@@ -85,3 +85,17 @@ test-xunit: mk_go_test-xunit ## generate xunit report using the results of previ
 
 package: ## build the docker image with existing binaries from dist directory
 	docker build --tag $(DOCKER_IMAGE) .
+
+PYTHON ?= python3
+
+site: ## build the documentation site into build/site and check it (no private path, no foreign request, no cookie)
+	$(PYTHON) scripts/build_site.py --out build/site
+
+site-check: site ## build the site, then run the example check of the quickstart against it
+	bash scripts/check-site-example.sh
+
+site-image: ## build the site container image (needs Docker): deploy/site/Dockerfile from the repository root
+	docker build -f deploy/site/Dockerfile -t $(or $(SITE_IMAGE),venom-site:check) .
+
+site-image-check: ## build the site image and prove it: same pages, non-root, read-only, no leak (needs Docker)
+	bash scripts/check-site-image.sh

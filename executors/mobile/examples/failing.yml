@@ -1,0 +1,13 @@
+# A step that must fail: the failure has to leave a screenshot and a screen dump (AC-3).
+name: failing step leaves diagnostics
+testcases:
+  - name: element that does not exist
+    steps:
+      - type: mobile
+        action: waitFor
+        text: Welcome to React Native
+        syncTimeout: 120
+      - type: mobile
+        action: waitFor
+        accessibilityId: NoSuchElementOnThisScreen
+        syncTimeout: 3

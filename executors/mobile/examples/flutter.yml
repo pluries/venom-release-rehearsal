@@ -1,0 +1,26 @@
+# One suite, two platforms: the Flutter counter app. Run it with the variables of the platform (--var-from-file).
+name: Flutter app, same flow on Android and iOS
+testcases:
+  - name: find, tap, read
+    steps:
+      - type: mobile
+        action: waitFor
+        accessibilityId: Increment
+        syncTimeout: 240
+      - type: mobile
+        action: read
+        accessibilityId: Increment
+        assertions:
+          - result.err ShouldBeEmpty
+      - type: mobile
+        action: tap
+        accessibilityId: Increment
+      - type: mobile
+        action: waitFor
+        accessibilityId: "1"
+      - type: mobile
+        action: read
+        accessibilityId: "1"
+        attribute: "{{.readattr}}"
+        assertions:
+          - result.value ShouldEqual 1

@@ -5,7 +5,7 @@ take a screenshot, open a deep link, switch into a web view, answer an iOS syste
 machine as venom, or on a Mac that venom reaches through an SSH tunnel. It uses the UiAutomator2 driver for an Android
 emulator and the XCUITest driver for an iOS simulator.
 
-Status: milestones M1 (#2396), M2 (#2397), M3 (#2398) and M4 (#2399). Android on an emulator and iOS on a simulator, on the same machine or on a Mac reached through SSH; web views, coordinates, deep links and alerts. The iOS calls are tested against a scripted server and were run on a simulator on 2026-10-28 and 2026-10-29 with the built-in Settings app and with Appium's UIKitCatalog (a `.zip` install, alerts, `scroll` with `until`, a web view). Not run on a simulator: a `.app` folder, coordinates, `openURL`, `hideKeyboard` and the alert `button` label (see "iOS" and `docs/feat/2398/validation.md`).
+Status: milestones M1 (#2396), M2 (#2397), M3 (#2398) and M4 (#2399). Android on an emulator and iOS on a simulator, on the same machine or on a Mac reached through SSH; web views, coordinates, deep links and alerts. The iOS calls are tested against a scripted server and were run on a simulator on 2026-10-28 and 2026-10-29 with the built-in Settings app and with Appium's UIKitCatalog (a `.zip` install, alerts, `scroll` with `until`, a web view). Not run on a simulator: a `.app` folder, coordinates, `openURL`, `hideKeyboard` and the alert `button` label (see "iOS"; the detailed run notes are not published).
 
 Check that it works: run the hermetic tests (`go test ./executors/mobile/ -count=1`, no device needed), then the real
 test against your own Appium and emulator (see "Run the tests"). The hermetic tests talk to a scripted fake server, so
@@ -370,16 +370,16 @@ With `mobile.platform: ios` the same suite drives an app on an iOS **simulator**
 iPhone is not covered. The iOS calls are implemented from the XCUITest driver's documented behaviour and tested against a
 scripted server. They were run on a simulator (iPhone 17, iOS 26.5, Appium 3.9.0, XCUITest driver 12.22.3), in two runs:
 
-- 2026-10-28, the built-in Settings app launched by bundle id, suite `docs/feat/2398/handrun-settings.yml`, 3 of 3 test
+- 2026-10-28, the built-in Settings app launched by bundle id, suite `examples/handrun-settings.yml`, 3 of 3 test
   cases passed: session open, `waitFor`, `tap`, swipe by direction, `terminate`, `launch`, the locators `text`, `name`,
   `predicate` and `classChain`, `count`, and `alert` with no alert open.
 - 2026-10-29, Appium's UIKitCatalog v4.0.5 given as `UIKitCatalog.zip` with `mobile.appSHA256`, through the SSH tunnel,
-  suite `docs/feat/2398/handrun-uikitcatalog.yml`, final status PASS: the `.zip` install, `alert` accept (the alert text
+  suite `examples/handrun-uikitcatalog.yml`, final status PASS: the `.zip` install, `alert` accept (the alert text
   came back in `result.text`) and dismiss, `scroll` with `until`, and a web view (`context` reported a `WEBVIEW`
   context, `css: body` counted more than 0, `context: native` went back). The iOS web view needed no chromedriver.
 
 Not run on a simulator: a `.app` folder, coordinates, `openURL`, `hideKeyboard`, the alert `button` label, percent
-coordinates. Details in `docs/feat/2398/validation.md`.
+coordinates. The detailed run notes are not published.
 Rows of a Settings-like list are not `XCUIElementTypeCell` on iOS 26: write a class chain as `**/*[...]`, not with a cell type.
 The first session took minutes (WebDriverAgent build), which is why the default session timeout is 300 s.
 
@@ -395,7 +395,7 @@ The first session took minutes (WebDriverAgent build), which is why the default 
   no native libraries). Cloud Grey's TheApp v1.10.0 (2019) failed both ways on the maker's Mac.
 - A ready sample for trying iOS: Appium's UIKitCatalog (`UIKitCatalog.zip`, a simulator build with arm64 and x86_64
   slices, bundle id `com.example.apple-samplecode.UICatalog`), from the release page of
-  <https://github.com/appium/ios-uicatalog>. The suite `docs/feat/2398/handrun-uikitcatalog.yml` runs on it.
+  <https://github.com/appium/ios-uicatalog>. The suite `examples/handrun-uikitcatalog.yml` runs on it.
 
 ### Settings that change on iOS
 
@@ -481,8 +481,9 @@ Planned, refused or absent today:
 - Apps without an arm64 slice, on an Apple Silicon Mac.
 - Password login over SSH: key authentication only.
 - A chromedriver downloaded for you: for an Android web view the operator supplies a matching one.
-- Not yet run on a simulator (see "iOS" and `docs/feat/2398/validation.md`): the install of a `.app` folder (only a
-  `.zip` ran), `x`/`y` and percent coordinates, `openURL`, `hideKeyboard`, and the alert `button` label.
+- Not yet run on a simulator (see "iOS"; the detailed run notes are not published): the install of a `.app` folder (only a
+  `.zip` ran), `x`/`y` and percent coordinates, `openURL`, `hideKeyboard`, and the alert `button` label. The suite
+  `examples/handrun-ios.yml` is written for the `.app` folder install.
 
 ## Example
 
@@ -580,15 +581,15 @@ Public apps that the maker's runs used. Each is arm64-ready.
 |---|---|---|
 | ApiDemos | Android | Appium's `ApiDemos-debug.apk`, from the releases of <https://github.com/appium/android-apidemos> |
 | UIKitCatalog v4.0.5 | iOS simulator | `UIKitCatalog.zip`, from the releases of <https://github.com/appium/ios-uicatalog> |
-| Flutter counter app | both | `flutter create`, built by `docs/feat/2400/build-sample-apps.sh` (Android release APK, iOS simulator debug app) |
+| Flutter counter app | both | `flutter create`, built by `examples/build-sample-apps.sh` (Android release APK, iOS simulator debug app) |
 | React Native app | both | `react-native init`, built by the same script (Android release APK, iOS Release simulator app) |
 
 The script runs on the Mac. It installs the Flutter SDK and CocoaPods if they are missing, builds the four apps from the
 frameworks' own templates and lists them at the end. Run `flutter --version` once by hand first (see "Set up the Mac").
 
-The suites are in `docs/feat/2400/`: `flutter.yml` and `rn.yml` run unchanged on both platforms, with the variable file of
-each platform (`android.vars.example.yml`, `ios.vars.example.yml`: fill the `<...>` values); `failing.yml` fails on
-purpose to show the diagnostics files. Results: `docs/feat/2400/validation.md`.
+The suites are in `examples/`: `examples/flutter.yml` and `examples/rn.yml` run unchanged on both platforms, with the variable file of
+each platform (`examples/android.vars.example.yml`, `examples/ios.vars.example.yml`: fill the `<...>` values); `examples/failing.yml` fails on
+purpose to show the diagnostics files. The detailed run notes are not published.
 
 ## Run the tests
 

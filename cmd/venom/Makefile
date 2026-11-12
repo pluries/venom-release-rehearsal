@@ -5,6 +5,7 @@
 
 TARGET_NAME 			= venom
 LDFLAGS					= -ldflags "-X github.com/ovh/venom.Version=$(if ${GIT_DESCRIBE},${GIT_DESCRIBE},snapshot)"
+BUILD_MODE				= -trimpath -buildvcs=false
 
 # If you want to enable the cross-compilation, uncomment the following line:
 ENABLE_CROSS_COMPILATION := true

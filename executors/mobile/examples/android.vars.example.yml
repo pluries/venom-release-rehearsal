@@ -1,0 +1,18 @@
+# Variables for the suites flutter.yml and rn.yml on an Android emulator behind a Mac. Copy to android.vars.yml and fill in the <...> values.
+# Run: venom run --var-from-file android.vars.yml flutter.yml
+mobile:
+  url: http://127.0.0.1:4723
+  ssh:
+    host: <mac host or address>
+    port: <ssh port, 22 by default>
+    user: <ssh user>
+    key: <path of the private key>
+    knownhosts: <path of the known_hosts file>
+  platform: android
+  device: emulator-5554
+  osVersion: "14"
+  app: <path of the .apk, relative to the suite folder>
+  appSHA256: <sha-256 of the .apk, in hex>
+  appId: <package id of the app>
+  syncTimeout: 30
+readattr: content-desc

@@ -1,0 +1,18 @@
+# Variables for the suites flutter.yml and rn.yml on an iOS simulator on a Mac. Copy to ios.vars.yml and fill in the <...> values.
+# Run: venom run --var-from-file ios.vars.yml flutter.yml
+mobile:
+  url: http://127.0.0.1:4723
+  ssh:
+    host: <mac host or address>
+    port: <ssh port, 22 by default>
+    user: <ssh user>
+    key: <path of the private key>
+    knownhosts: <path of the known_hosts file>
+  platform: ios
+  device: iPhone 17
+  osVersion: "26.5"
+  app: <path of the simulator .app.zip, relative to the suite folder>
+  appSHA256: <sha-256 of the .zip, in hex>
+  appId: <bundle id of the app>
+  syncTimeout: 30
+readattr: label

@@ -1,0 +1,9 @@
+name: Quickstart suite
+testcases:
+  - name: say hello
+    steps:
+      - type: exec
+        script: echo "hello venom"
+        assertions:
+          - result.systemout ShouldContainSubstring hello
+          - result.code ShouldEqual 0

@@ -23,10 +23,10 @@ In your yaml file, you can use:
 any server is accepted. This is the executor's behaviour from before the two keys existed. It suits ephemeral test
 hosts whose key changes on every run. Set one of the two keys to check the host:
 
-- `knownhosts`: a file in the format of `~/.ssh/known_hosts`, e.g. the output of `ssh-keyscan -p 2222 10.0.1.5`. A
+- `knownhosts`: a file in the format of `~/.ssh/known_hosts`, e.g. the output of `ssh-keyscan -p 2222 192.0.2.10`. A
   relative path is read from the test suite's directory; an absolute path is used as is. The step fails if the host
   is not in the file or presents another key. The file may also trust a certificate authority with a line such as
-  `@cert-authority [10.0.1.5]:2222 ssh-ed25519 AAAAC3Nza…`: a host that presents a host certificate signed by that
+  `@cert-authority [192.0.2.10]:2222 ssh-ed25519 AAAAC3Nza…`: a host that presents a host certificate signed by that
   authority passes the check, provided the certificate's principals, when it lists any, include the host as written
   in `host` (without the port).
 - `hostkey`: one line such as `ssh-ed25519 AAAAC3Nza… [comment]`, e.g. the content of the host's
@@ -57,7 +57,7 @@ testcases:
 - name: Use specific privatekey
   steps:
   - type: ssh
-    host: 10.0.1.5:2222
+    host: 192.0.2.10:2222
     command: echo 'foo'
     user: bar
     privatekey: /home/foo/.ssh/id_rsa
@@ -67,7 +67,7 @@ testcases:
 - name: Execute command as another user than bar
   steps:
   - type: ssh
-    host: 10.0.1.5:2222
+    host: 192.0.2.10:2222
     command: echo 'foo'
     user: bar
     sudo: root
@@ -78,7 +78,7 @@ testcases:
 - name: Check the host's key against a known_hosts file next to the suite
   steps:
   - type: ssh
-    host: 10.0.1.5:2222
+    host: 192.0.2.10:2222
     command: echo 'foo'
     user: bar
     knownhosts: ssh/known_hosts
@@ -88,7 +88,7 @@ testcases:
 - name: Pin the host's key
   steps:
   - type: ssh
-    host: 10.0.1.5:2222
+    host: 192.0.2.10:2222
     command: echo 'foo'
     user: bar
     hostkey: '{{.hostkey}}'

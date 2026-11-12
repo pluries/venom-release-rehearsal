@@ -15,6 +15,9 @@ results
 bin.test
 profile.coverprofile
 tests.log
+image-digest.txt
+publish-summary.txt
+publish-dry-run.txt
 *.dump.json
 *.dump.html
 *.jpg
@@ -66,3 +69,7 @@ analysis/**/SECRETS*
 
 # diagnostics of a failing mobile step, written in the working directory (executors/mobile)
 screen.png
+
+# the documentation site built by `make site`
+build/
+__pycache__/

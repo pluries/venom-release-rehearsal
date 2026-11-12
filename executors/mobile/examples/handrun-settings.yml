@@ -1,0 +1,75 @@
+# Hand-run suite for #2398 (V8): the executor on an iOS simulator with the built-in Settings app, launched by bundle id (no app
+# file). Run on 2026-10-28: 3 of 3 test cases passed. It needs the XCUITest driver in Appium on the Mac; the first session
+# builds WebDriverAgent and takes minutes.
+# Replace every <placeholder>: the SSH host, port, user, private key and known_hosts file of the Mac (Appium listens on
+# 127.0.0.1:4723 there), and a simulator name and iOS version that exist on it. Drop the ssh block when Appium runs on the
+# same machine.
+# Run from an empty folder: ../venom run handrun-settings.yml
+name: iOS simulator Settings hand run
+vars:
+  mobile:
+    url: http://127.0.0.1:4723
+    ssh:
+      host: <mac host>
+      port: <ssh port>
+      user: <ssh user>
+      key: <path of the private key>
+      knownhosts: <path of the known_hosts file>
+    platform: ios
+    device: <simulator name, for example iPhone 17>
+    osVersion: "<iOS version, for example 26.5>"
+    appId: com.apple.Preferences
+    syncTimeout: 30
+
+testcases:
+  - name: open, tap, swipe, terminate, launch
+    steps:
+      - type: mobile
+        action: waitFor
+        accessibilityId: General
+        syncTimeout: 120
+      - type: mobile
+        action: tap
+        accessibilityId: General
+      - type: mobile
+        action: waitFor
+        accessibilityId: About
+      - type: mobile
+        action: swipe
+        direction: up
+      - type: mobile
+        action: terminate
+      - type: mobile
+        action: launch
+      - type: mobile
+        action: waitFor
+        accessibilityId: General
+        syncTimeout: 60
+
+  - name: iOS locators
+    steps:
+      - type: mobile
+        action: waitFor
+        text: General
+        syncTimeout: 60
+      - type: mobile
+        action: waitFor
+        name: General
+      - type: mobile
+        action: waitFor
+        predicate: label == "General"
+      - type: mobile
+        action: waitFor
+        classChain: '**/*[`label == "General"`]'
+      - type: mobile
+        action: count
+        predicate: label != ""
+        assertions:
+          - result.count ShouldBeGreaterThan 3
+
+  - name: no alert open
+    steps:
+      - type: mobile
+        action: alert
+        assertions:
+          - result.err ShouldContainSubstring no alert open

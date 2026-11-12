@@ -1,0 +1,3 @@
+ • Quickstart suite (site/examples/quickstart.yml)
+ 	• say-hello PASS
+final status: PASS

@@ -1,0 +1,167 @@
+{
+  "title": "Pluries Venom",
+  "repo": "https://github.com/pluries/venom",
+  "branch": "main",
+  "baseUrl": "https://venom.pluries.dev",
+  "groups": {
+    "Getting started": "Install venom and run your first test suite.",
+    "Concepts": "The ideas behind test suites, executors and variables.",
+    "Guides": "How to use the command line, reports and pipelines.",
+    "Executors": "One page for each protocol venom can test.",
+    "Reference": "Assertions, licence and contribution rules."
+  },
+  "pages": [
+    {
+      "slug": "index",
+      "title": "Pluries Venom",
+      "source": "site/pages/index.md",
+      "template": "site/home.html",
+      "description": "Venom runs integration tests written in YAML."
+    },
+    {
+      "slug": "quickstart",
+      "title": "Quickstart",
+      "source": "site/pages/quickstart.md",
+      "group": "Getting started",
+      "description": "Install venom, write a suite and run it."
+    },
+    {
+      "generator": "readme-split",
+      "source": "README.md",
+      "skip": [
+        "Table of contents",
+        "🐍 Venom",
+        "Contributing"
+      ],
+      "sections": [
+        {
+          "heading": "Overview",
+          "slug": "overview",
+          "group": "Getting started",
+          "description": "What venom does and how a suite is built."
+        },
+        {
+          "heading": "Installing",
+          "slug": "installing",
+          "group": "Getting started",
+          "description": "How to install venom."
+        },
+        {
+          "heading": "Updating",
+          "slug": "updating",
+          "group": "Getting started",
+          "description": "How to update venom."
+        },
+        {
+          "heading": "Docker image",
+          "slug": "docker",
+          "group": "Getting started",
+          "description": "How to run venom from a Docker image."
+        },
+        {
+          "heading": "Write and run your first test suite",
+          "slug": "first-test",
+          "group": "Getting started",
+          "description": "A longer walk through a first test suite."
+        },
+        {
+          "heading": "Concepts",
+          "slug": "concepts",
+          "group": "Concepts",
+          "description": "The ideas behind a venom suite.",
+          "split": [
+            {
+              "heading": "TestSuites",
+              "slug": "testsuites",
+              "group": "Concepts",
+              "description": "How a test suite and its test cases are written."
+            },
+            {
+              "heading": "Executors",
+              "slug": "executors-concept",
+              "group": "Concepts",
+              "description": "What an executor is and which ones come with venom."
+            },
+            {
+              "heading": "Variables",
+              "slug": "variables",
+              "group": "Concepts",
+              "description": "How to define and use variables in a suite."
+            },
+            {
+              "heading": "Use outputs from a test step as input of another test step",
+              "slug": "step-outputs",
+              "group": "Concepts",
+              "description": "How a step passes its result to the next step."
+            },
+            {
+              "heading": "Builtin venom variables",
+              "slug": "builtin-variables",
+              "group": "Concepts",
+              "description": "The variables venom sets for you."
+            },
+            {
+              "heading": "Assertions",
+              "slug": "assertions",
+              "group": "Reference",
+              "description": "The assertions you can use to check a step result."
+            }
+          ]
+        },
+        {
+          "heading": "CLI Usage",
+          "slug": "cli-usage",
+          "group": "Guides",
+          "description": "The venom commands and their options."
+        },
+        {
+          "heading": "Export tests report",
+          "slug": "reports",
+          "group": "Guides",
+          "description": "How to export results as JSON, XML or HTML."
+        },
+        {
+          "heading": "Advanced usage",
+          "slug": "advanced",
+          "group": "Guides",
+          "description": "Options for larger suites."
+        },
+        {
+          "heading": "FAQ",
+          "slug": "faq",
+          "group": "Guides",
+          "description": "Answers to common questions."
+        },
+        {
+          "heading": "Use venom in CI/CD pipelines",
+          "slug": "ci-cd",
+          "group": "Guides",
+          "description": "How to run venom in a pipeline."
+        },
+        {
+          "heading": "Hacking",
+          "slug": "hacking",
+          "group": "Reference",
+          "description": "How to work on venom itself."
+        },
+        {
+          "heading": "License",
+          "slug": "license",
+          "group": "Reference",
+          "description": "The licence of venom."
+        }
+      ]
+    },
+    {
+      "slug": "contributing",
+      "title": "Contributing",
+      "source": "CONTRIBUTING.md",
+      "group": "Reference",
+      "description": "How to propose a change to venom."
+    },
+    {
+      "generator": "executors",
+      "group": "Executors"
+    }
+  ]
+}

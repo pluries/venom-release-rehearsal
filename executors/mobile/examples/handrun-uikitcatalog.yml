@@ -1,0 +1,90 @@
+# Hand-run suite for #2398 (V8, V9): the executor on an iOS simulator with a real app installed from a .zip, through the
+# SSH tunnel. Run on 2026-10-29 against Appium's UIKitCatalog v4.0.5 (github.com/appium/ios-uicatalog, release of
+# 2026-07-27; a .zip of a simulator .app with arm64 and x86_64 slices; bundle id com.example.apple-samplecode.UICatalog).
+# Result: first run (install and open) PASS; second run, 2 test cases, final status PASS. The iOS web view needed no chromedriver.
+# It needs Appium 3 with the XCUITest driver on the Mac; the first session builds WebDriverAgent and takes minutes.
+# Replace every <placeholder>: the SSH host, port, user, private key and known_hosts file of the Mac (Appium listens on
+# 127.0.0.1:4723 there), a simulator name and iOS version that exist on it, the path of UIKitCatalog.zip and its SHA-256
+# (sha256sum UIKitCatalog.zip). Drop the ssh block when Appium runs on the same machine.
+# Run from an empty folder: ../venom run handrun-uikitcatalog.yml
+name: UIKitCatalog on the iOS simulator
+vars:
+  mobile:
+    url: http://127.0.0.1:4723
+    ssh:
+      host: <mac host>
+      port: <ssh port>
+      user: <ssh user>
+      key: <path of the private key>
+      knownhosts: <path of the known_hosts file>
+    platform: ios
+    device: <simulator name, for example iPhone 17>
+    osVersion: "<iOS version, for example 26.5>"
+    app: <path of UIKitCatalog.zip>
+    appSHA256: <sha-256 of UIKitCatalog.zip, in hex>
+    appId: com.example.apple-samplecode.UICatalog
+    syncTimeout: 30
+testcases:
+  - name: alerts
+    steps:
+      - type: mobile
+        action: waitFor
+        text: Alert Views
+        syncTimeout: 240
+      - type: mobile
+        action: tap
+        text: Alert Views
+      - type: mobile
+        action: waitFor
+        text: Simple
+      - type: mobile
+        action: tap
+        text: Simple
+      - type: mobile
+        action: alert
+        choice: accept
+        assertions:
+          - result.err ShouldBeEmpty
+          - result.text ShouldNotBeEmpty
+      - type: mobile
+        action: alert
+        assertions:
+          - result.err ShouldContainSubstring no alert open
+      - type: mobile
+        action: tap
+        predicate: label CONTAINS "Cancel"
+      - type: mobile
+        action: alert
+        choice: dismiss
+        assertions:
+          - result.err ShouldBeEmpty
+
+  - name: web view
+    steps:
+      - type: mobile
+        action: waitFor
+        text: Alert Views
+        syncTimeout: 60
+      - type: mobile
+        action: scroll
+        direction: down
+        until: true
+        text: Web View
+      - type: mobile
+        action: tap
+        text: Web View
+      - type: mobile
+        action: context
+        syncTimeout: 30
+        assertions:
+          - result.context ShouldStartWith WEBVIEW
+      - type: mobile
+        action: count
+        css: body
+        assertions:
+          - result.count ShouldBeGreaterThan 0
+      - type: mobile
+        action: context
+        context: native
+        assertions:
+          - result.context ShouldEqual NATIVE_APP
